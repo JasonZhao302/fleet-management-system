@@ -11,7 +11,9 @@ const userSchema = new mongoose.Schema({
     phone: { type: String },
     gender: { type: String, enum: ['male', 'female', 'other'] },
     licenseNumber: { type: String },
-});
+    dateOfBirth: { type: Date },
+    status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
+}, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
