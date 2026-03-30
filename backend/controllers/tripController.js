@@ -12,10 +12,11 @@ const getTrips = async (req, res) => {
 };
 
 const createTrip = async (req, res) => {
-    const { tripId, origin, destination, scheduledDate, vehicle, driver, notes, status } = req.body;
+    const { origin, destination, scheduledDate, vehicle, driver, notes, status } = req.body;
     try {
-        const tripExists = await Trip.findOne({ tripId });
-        if (tripExists) return res.status(400).json({ message: 'Trip ID already exists' });
+        // Auto-generate trip ID
+        const count = await Trip.countDocuments();
+        const tripId = `FT-${String(count + 1).padStart(3, '0')}`;
 
         const trip = await Trip.create({ tripId, origin, destination, scheduledDate, vehicle, driver, notes, status });
         const populatedTrip = await Trip.findById(trip._id)
