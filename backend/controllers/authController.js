@@ -7,12 +7,19 @@ const generateToken = (id) => {
 };
 
 const registerUser = async (req, res) => {
-    const { firstName, lastName, email, password, role, phone, gender, licenseNumber } = req.body;
+    const { firstName, lastName, email, password, role, phone, gender, licenseNumber, dateOfBirth } = req.body;
     try {
         const userExists = await User.findOne({ email });
         if (userExists) return res.status(400).json({ message: 'User already exists' });
 
-        const user = await User.create({ firstName, lastName, email, password, role, phone, gender, licenseNumber });
+        const userData = { firstName, lastName, email, password, role };
+        if (phone) userData.phone = phone;
+        if (gender) userData.gender = gender;
+        if (licenseNumber) userData.licenseNumber = licenseNumber;
+        if (dateOfBirth) userData.dateOfBirth = dateOfBirth;
+
+        console.log('Creating user with data:', userData);  // add this
+        const user = await User.create(userData);
         res.status(201).json({ 
             id: user.id, 
             firstName: user.firstName, 
@@ -22,6 +29,7 @@ const registerUser = async (req, res) => {
             token: generateToken(user.id) 
         });
     } catch (error) {
+        console.log('Error creating user:', error.message);  // add this
         res.status(500).json({ message: error.message });
     }
 };

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const tripSchema = new mongoose.Schema({
-    tripId: { type: String, required: true, unique: true },
+    tripId: { type: String, unique: true },
     origin: { type: String, required: true },
     destination: { type: String, required: true },
     scheduledDate: { type: Date, required: true },
