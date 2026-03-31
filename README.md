@@ -1,24 +1,111 @@
+# Fleet Management System
 
-**Assessment 1.2 (Total Marks **20**)**
+A full-stack web application for RedRoad Logistics to manage vehicles, drivers, and delivery trips.
 
-Assignment: **Software requirements analysis and design (**Full-Stack CRUD Application Development with DevOps Practices**)**
+## Tech Stack
 
+- **Frontend:** React.js, Axios
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB Atlas
+- **Deployment:** AWS EC2, Nginx, PM2
+- **CI/CD:** GitHub Actions
 
----
+## Features
 
-**Objective**
+- User authentication with role-based access (Admin/Driver)
+- Admin panel: full CRUD for vehicles, drivers and trips
+- Driver panel: view assigned trips and update trip status
+- Responsive design for driver mobile view
+- Automated testing with Mocha/Chai/Sinon
+- CI/CD pipeline with GitHub Actions
 
-For this assessment, you have already been assigned a project. Your task is to develop a system that implements CRUD (Create, Read, Update, Delete) operations based on the selected project. The system should include both a user panel and an admin panel. Depending on the nature of your chosen project, you may decide how many CRUD operations are required to support the functionality of the system. You have been provided with a starter project that includes user authentication using Node.js, React.js, and MongoDB, your should extend this application based on your assigned project requirements. Ensure that the implemented features are appropriate and meaningful for your selected project. Your project should include the following:
-In this assignment you will complete the following tasks:
+## Project Setup (Local Development)
 
-* **Basic Version Control using GitHub**
-* **Development, CI/CD Integration for Automated Deployment**
-* **Project report**
+### Prerequisites
+- Node.js v22+
+- MongoDB Atlas account
+- Git
 
- 
----
+### Installation
 
-**GitHub link of the starter project: **[https://github.com/nahaQUT/sampleapp_IFQ636.git](https://github.com/nahaQUT/sampleapp_IFQ636.git)
+1. Clone the repository:
+```bash
+git clone https://github.com/JasonZhao302/fleet-management-system.git
+cd fleet-management-system
+```
 
----
+2. Install dependencies:
+```bash
+npm run install-all
+```
 
+3. Create `.env` file in the `backend` folder:
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5001
+```
+
+4. Start the application:
+```bash
+npm start
+```
+
+- Frontend runs on: http://localhost:3000
+- Backend runs on: http://localhost:5001
+
+## Public URL
+
+http://3.24.134.60(may change when EC2 instance restarted)
+
+## Test Credentials
+
+**Admin account:**
+- Email: admin@redroad.com.au
+- Password: (use the password you registered with)
+
+**Driver account:**
+- Email: driver@redroad.com.au
+- Password: (use the password you registered with)
+
+## Running Tests
+```bash
+cd backend
+npm test
+```
+
+## CI/CD Pipeline
+
+The CI/CD pipeline is configured using GitHub Actions. Every push to the `main` branch automatically:
+
+1. Pulls latest code to EC2 runner
+2. Installs backend and frontend dependencies
+3. Builds the React frontend
+4. Runs backend test cases
+5. Deploys the updated app using PM2
+
+## Project Structure
+```
+fleet-management-system/
+├── backend/
+│   ├── config/         # Database configuration
+│   ├── controllers/    # Route handlers
+│   ├── middleware/     # JWT authentication
+│   ├── models/         # Mongoose schemas
+│   ├── routes/         # API routes
+│   └── test/           # Test cases
+├── frontend/
+│   └── src/
+│       ├── components/ # Reusable UI components
+│       ├── context/    # Auth context
+│       └── pages/      # Application pages
+└── .github/
+    └── workflows/      # CI/CD pipeline
+```
+
+## Student Information
+
+- **Name:** Jia Zhao (Jason)
+- **Student ID:** n12380873
+- **Unit:** IFN636 Software Life Cycle Management
+- **Tutor:** Dr Ranesh Naha
