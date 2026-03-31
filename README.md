@@ -61,12 +61,12 @@ http://3.24.134.60(may change when EC2 instance restarted)
 ## Test Credentials
 
 **Admin account:**
-- Email: admin@redroad.com.au
-- Password: (use the password you registered with)
+- Email: admin1@test.com
+- Password: 1234
 
 **Driver account:**
-- Email: driver@redroad.com.au
-- Password: (use the password you registered with)
+- Email: test1@gmail.com
+- Password: 1234
 
 ## Running Tests
 ```bash
