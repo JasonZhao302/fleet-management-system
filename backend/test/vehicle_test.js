@@ -27,7 +27,7 @@ describe('Vehicle Controller Tests', () => {
         it('should return 500 if an error occurs', async () => {
             const findStub = sinon.stub(Vehicle, 'find').throws(new Error('DB Error'));
             const req = {};
-            const res = { status: sinon.stub().returnsThis(), json: sinon.spy() };
+            const res = { status: sinon.stub(   ).returnsThis(), json: sinon.spy() };
 
             await getVehicles(req, res);
 
