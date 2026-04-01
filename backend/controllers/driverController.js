@@ -1,7 +1,11 @@
 const User = require('../models/User');
 
+// @desc    Get all drivers (users with role 'driver')
+// @route   GET /api/drivers
+// @access  Private (Admin)
 const getDrivers = async (req, res) => {
     try {
+        // Exclude password field from the response for security
         const drivers = await User.find({ role: 'driver' }).select('-password');
         res.json(drivers);
     } catch (error) {
@@ -9,18 +13,24 @@ const getDrivers = async (req, res) => {
     }
 };
 
+// @desc    Add a new driver
+// @route   POST /api/drivers
+// @access  Private (Admin)
 const addDriver = async (req, res) => {
     const { firstName, lastName, email, password, phone, licenseNumber, dateOfBirth, status } = req.body;
     try {
+        // Check if a user with this email already exists
         const userExists = await User.findOne({ email });
         if (userExists) return res.status(400).json({ message: 'Email already exists' });
 
+        // Create the driver as a User with role set to 'driver'
         const driver = await User.create({
             firstName, lastName, email, password,
             phone, licenseNumber, dateOfBirth,
             status, role: 'driver'
         });
 
+        // Return driver details without the password field
         const driverResponse = await User.findById(driver._id).select('-password');
         res.status(201).json(driverResponse);
     } catch (error) {
@@ -28,11 +38,15 @@ const addDriver = async (req, res) => {
     }
 };
 
+// @desc    Update a driver
+// @route   PUT /api/drivers/:id
+// @access  Private (Admin)
 const updateDriver = async (req, res) => {
     try {
         const driver = await User.findById(req.params.id);
         if (!driver) return res.status(404).json({ message: 'Driver not found' });
 
+        // Update only the fields provided in the request body
         const { firstName, lastName, email, phone, licenseNumber, dateOfBirth, status } = req.body;
         driver.firstName = firstName || driver.firstName;
         driver.lastName = lastName || driver.lastName;
@@ -43,6 +57,8 @@ const updateDriver = async (req, res) => {
         driver.status = status || driver.status;
 
         const updatedDriver = await driver.save();
+
+        // Return updated driver details without the password field
         const driverResponse = await User.findById(updatedDriver._id).select('-password');
         res.json(driverResponse);
     } catch (error) {
@@ -50,6 +66,9 @@ const updateDriver = async (req, res) => {
     }
 };
 
+// @desc    Delete a driver
+// @route   DELETE /api/drivers/:id
+// @access  Private (Admin)
 const deleteDriver = async (req, res) => {
     try {
         const driver = await User.findById(req.params.id);
