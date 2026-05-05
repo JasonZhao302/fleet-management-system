@@ -102,10 +102,3 @@ fleet-management-system/
 └── .github/
     └── workflows/      # CI/CD pipeline
 ```
-
-## Student Information
-
-- **Name:** Jia Zhao (Jason)
-- **Student ID:** n12380873
-- **Unit:** IFN636 Software Life Cycle Management
-- **Tutor:** Dr Ranesh Naha
